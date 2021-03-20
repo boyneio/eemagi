@@ -10,3 +10,7 @@ export type Photo = {
     title: string;
     caption: string;
 }
+
+export type PhotoAndURL = Photo & {
+    signedURL: string;
+}
