@@ -1,7 +1,6 @@
 import { rest } from 'msw'
 import {User, Photo} from '../types';
-import image1 from '!url-loader!./9_18_2019 copy.jpeg'
-import image2 from '!url-loader!./IMG_0316.jpg'
+
 
 const root = process.env.REACT_APP_API_URL;
 
@@ -34,8 +33,8 @@ const photos: Photo[] = [
 ]
 
 export const handlers = [
-    rest.get(`${root}/user/:userId`, (req, res, ctx) => {
-        const { userId } = req.params;
+    rest.get(`${root}user`, (req, res, ctx) => {
+        const userId = 1;
         const user = users.find(u => u.id === userId);
         if(!user){
             return res(ctx.status(404));
