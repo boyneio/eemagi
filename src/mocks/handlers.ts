@@ -1,5 +1,8 @@
 import { rest } from 'msw'
 import {User, Photo} from '../types';
+import image1 from "./9_18_2019 copy.jpeg";
+import image2 from "./IMG_0316.jpg";
+import Jimp from "jimp";
 
 
 const root = process.env.REACT_APP_API_URL;
@@ -23,12 +26,16 @@ const photos: Photo[] = [
     {
         id: 1,
         title: "Josh and Adelaide",
-        caption: "Ahhh"
+        caption: "Ahhh",
+        thumbnailUrl: `${root}photos/1?mini`,
+        fullSizeUrl: "static/1&<some_signature>"
     },
     {
         id: 2,
         title: "My Old Car",
-        caption: "That was too expensive"
+        caption: "That was too expensive",
+        thumbnailUrl: `${root}/2?mini.jpeg`,
+        fullSizeUrl: "static/2&<some_signature>"
     }
 ]
 
@@ -47,5 +54,17 @@ export const handlers = [
     }),
     rest.get(`${root}/photos`, (req, res, ctx) => {
         return res(ctx.json(photos));
+    }),
+    rest.get(photos[0].thumbnailUrl, async (req, res, ctx) => {
+        const image = await Jimp.read(image1);
+        (await image).resize(100, Jimp.AUTO);
+        const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
+        
+        return res(
+            ctx.set('Content-Length', imageBuffer.byteLength.toString()),
+            ctx.set('Content-Type', 'image/jpeg'),
+            // Respond with the "ArrayBuffer".
+            ctx.body(imageBuffer),
+        )
     })
 ]

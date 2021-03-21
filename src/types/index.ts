@@ -9,8 +9,6 @@ export type Photo = {
     id: number;
     title: string;
     caption: string;
-}
-
-export type PhotoAndURL = Photo & {
-    signedURL: string;
+    thumbnailUrl: string;
+    fullSizeUrl: string;
 }
