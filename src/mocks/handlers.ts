@@ -4,6 +4,8 @@ import image1 from "./9_18_2019 copy.jpeg";
 import image2 from "./IMG_0316.jpg";
 import Jimp from "jimp";
 
+const images = [image1, image2];
+
 
 const root = process.env.REACT_APP_API_URL;
 
@@ -34,7 +36,7 @@ const photos: Photo[] = [
         id: 2,
         title: "My Old Car",
         caption: "That was too expensive",
-        thumbnailUrl: `${root}/2?mini.jpeg`,
+        thumbnailUrl: `${root}photos/2?mini`,
         fullSizeUrl: "static/2&<some_signature>"
     }
 ]
@@ -55,9 +57,14 @@ export const handlers = [
     rest.get(`${root}/photos`, (req, res, ctx) => {
         return res(ctx.json(photos));
     }),
-    rest.get(photos[0].thumbnailUrl, async (req, res, ctx) => {
-        const image = await Jimp.read(image1);
-        (await image).resize(100, Jimp.AUTO);
+    rest.get(`${root}photos/:photoId`, async (req, res, ctx) => {
+        const {photoId} = req.params;
+        const mini = !!req.url.searchParams.get('mini');
+        const index = parseInt(photoId) - 1;
+        const image = await Jimp.read(images[index]);
+        if(mini){
+            (await image).resize(100, Jimp.AUTO);
+        }
         const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
         
         return res(

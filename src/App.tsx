@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="App">
-      <img src={`${base}photos/1?mini`} />
+      <img src={`${base}photos/1?mini=true`} />
     </div>
   );
 }
