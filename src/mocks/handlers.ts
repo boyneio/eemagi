@@ -29,14 +29,14 @@ const photos: Photo[] = [
         id: 1,
         title: "Josh and Adelaide",
         caption: "Ahhh",
-        thumbnailUrl: `${root}photos/1?mini`,
+        thumbnailUrl: `${root}photos/1?mini=true`,
         fullSizeUrl: "static/1&<some_signature>"
     },
     {
         id: 2,
         title: "My Old Car",
         caption: "That was too expensive",
-        thumbnailUrl: `${root}photos/2?mini`,
+        thumbnailUrl: `${root}photos/2?mini=true`,
         fullSizeUrl: "static/2&<some_signature>"
     }
 ]
@@ -54,7 +54,7 @@ export const handlers = [
             ctx.json(user)
         )
     }),
-    rest.get(`${root}/photos`, (req, res, ctx) => {
+    rest.get(`${root}photos`, (req, res, ctx) => {
         return res(ctx.json(photos));
     }),
     rest.get(`${root}photos/:photoId`, async (req, res, ctx) => {
