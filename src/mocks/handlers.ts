@@ -30,14 +30,14 @@ const photos: Photo[] = [
         title: "Josh and Adelaide",
         caption: "Ahhh",
         thumbnailUrl: `${root}photos/1?mini=true`,
-        fullSizeUrl: "static/1&<some_signature>"
+        fullSizeUrl: `${root}static/1?<some_signature>`
     },
     {
         id: 2,
         title: "My Old Car",
         caption: "That was too expensive",
         thumbnailUrl: `${root}photos/2?mini=true`,
-        fullSizeUrl: "static/2&<some_signature>"
+        fullSizeUrl: `${root}static/2?<some_signature>`
     }
 ]
 
@@ -65,6 +65,19 @@ export const handlers = [
         if(mini){
             (await image).resize(100, Jimp.AUTO);
         }
+        const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
+        
+        return res(
+            ctx.set('Content-Length', imageBuffer.byteLength.toString()),
+            ctx.set('Content-Type', 'image/jpeg'),
+            // Respond with the "ArrayBuffer".
+            ctx.body(imageBuffer),
+        )
+    }),
+    rest.get(`${root}static/:photoId`, async (req, res, ctx) => {
+        const {photoId} = req.params;
+        const index = parseInt(photoId) - 1;
+        const image = await Jimp.read(images[index]);
         const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
         
         return res(
