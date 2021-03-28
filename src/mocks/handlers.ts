@@ -27,15 +27,15 @@ const users: User[] = [
 const photos: Photo[] = [
     {
         id: 1,
-        title: "Josh and Adelaide",
-        caption: "Ahhh",
+        title: "Big Sur",
+        caption: "BEACH!",
         thumbnailUrl: `${root}photos/1?mini=true`,
         fullSizeUrl: `${root}static/1?<some_signature>`
     },
     {
         id: 2,
-        title: "My Old Car",
-        caption: "That was too expensive",
+        title: "Big Sur with Clouds",
+        caption: "Nice Bridge",
         thumbnailUrl: `${root}photos/2?mini=true`,
         fullSizeUrl: `${root}static/2?<some_signature>`
     }
