@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import {User, Photo} from '../types';
-import image1 from "./9_18_2019 copy.jpeg";
-import image2 from "./IMG_0316.jpg";
+import image1 from "./big_sur.jpeg";
+import image2 from "./big_sur_cloudy.jpeg";
 import Jimp from "jimp";
 
 const images = [image1, image2];
