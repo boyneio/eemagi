@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Photo, User } from "./types";
+import API from "./api";
 
 function App() {
+  const [photos, setPhotos] = React.useState<Photo[]>([]);
+  React.useEffect(() => {
+    API.get("photos").then((res) => setPhotos(res.data));
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {photos.map((p) => {
+        return (
+          <div key={p.id}>
+            <img src={p.thumbnailUrl} />
+          </div>
+        );
+      })}
     </div>
   );
 }
