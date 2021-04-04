@@ -1,14 +1,14 @@
 export type User = {
-    id: number;
-    username: string;
-    firstName: string;
-    lastName: string;
-}
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type Photo = {
-    id: number;
-    title: string;
-    caption: string;
-    thumbnailUrl: string;
-    fullSizeUrl: string;
-}
+  id: number;
+  title: string;
+  caption: string;
+  thumbnailUrl: string;
+  fullSizeUrl: string;
+};
