@@ -23,7 +23,7 @@ const users: User[] = [
   },
 ];
 
-const photos: Photo[] = [
+export const photos: Photo[] = [
   {
     id: 1,
     title: "Big Sur",
