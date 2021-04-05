@@ -2,7 +2,6 @@ import { rest, RestRequest, ResponseComposition, RestContext } from "msw";
 import image1 from "../../mocks/big_sur.jpeg"
 import image2 from "../../mocks/big_sur_cloudy.jpeg";
 import Jimp from "jimp";
-import {photos} from '../../mocks/handlers';
 
 const images = [image1, image2];
 
