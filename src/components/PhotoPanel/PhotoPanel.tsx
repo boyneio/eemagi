@@ -4,17 +4,11 @@ import API from '../../api';
 import {useQuery} from 'react-query';
 import Loader from '../utils/loader';
 
-type Props = {};
-
-const fetchPhotos = (): Promise<Photo[]> => {
-    return API.get<Photo[]>("photos").then((res) => res.data);
-};
-
 function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
     const [photos, setPhotos] = React.useState<Photo[]>([]);
     const query = useQuery(
         'photos',
-        fetchPhotos
+        () => API.get<Photo[]>("photos").then((res) => res.data)
     )
     React.useEffect(() => {
         switch (query.status) {
@@ -36,7 +30,7 @@ function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
     }
 }
 
-export default function ImagePanel(props: Props){
+export default function ImagePanel(){
     const {loading, error, photos} = usePhotos();
     if(loading){
         return <Loader />
