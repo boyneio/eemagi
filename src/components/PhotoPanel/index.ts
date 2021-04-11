@@ -1,3 +1,3 @@
-import PhotoPanel from './PhotoPanel';
+import PhotoPanel from "./PhotoPanel";
 
 export default PhotoPanel;
