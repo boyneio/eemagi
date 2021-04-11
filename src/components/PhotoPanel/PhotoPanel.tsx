@@ -1,19 +1,49 @@
 import React from 'react';
 import {Photo} from '../../types';
 import API from '../../api';
+import {useQuery} from 'react-query';
+import Loader from '../utils/loader';
 
 type Props = {};
 
-function usePhotos(): Photo[]{
+const fetchPhotos = (): Promise<Photo[]> => {
+    return API.get<Photo[]>("photos").then((res) => res.data);
+};
+
+function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
     const [photos, setPhotos] = React.useState<Photo[]>([]);
+    const query = useQuery(
+        'photos',
+        fetchPhotos
+    )
     React.useEffect(() => {
-        API.get<Photo[]>("photos").then((res) => setPhotos(res.data));
-    }, []);
-    return photos;
+        switch (query.status) {
+            case 'success':
+                setPhotos(query.data);
+                break;
+            case 'loading':
+                setPhotos([]);
+                break;
+            case 'error':
+                setPhotos([]);
+                break;
+        }
+    }, [query.status, query.data]);
+    return {
+        loading: query.isLoading,
+        error: query.isError,
+        photos
+    }
 }
 
 export default function ImagePanel(props: Props){
-    const photos = usePhotos();
+    const {loading, error, photos} = usePhotos();
+    if(loading){
+        return <Loader />
+    }
+    if(error){
+        return <span>Whoops!</span>
+    }
     return (
         <ul>
             {

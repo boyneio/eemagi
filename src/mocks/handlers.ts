@@ -23,23 +23,6 @@ const users: User[] = [
   },
 ];
 
-export const photos: Photo[] = [
-  {
-    id: 1,
-    title: "Big Sur",
-    caption: "BEACH!",
-    thumbnailUrl: `${root}photos/1?mini=true`,
-    fullSizeUrl: `${root}static/1?<some_signature>`,
-  },
-  {
-    id: 2,
-    title: "Big Sur with Clouds",
-    caption: "Nice Bridge",
-    thumbnailUrl: `${root}photos/2?mini=true`,
-    fullSizeUrl: `${root}static/2?<some_signature>`,
-  },
-];
-
 export const handlers = [
   rest.get(`${root}user`, (req, res, ctx) => {
     const userId = 1;
@@ -52,38 +35,5 @@ export const handlers = [
       ctx.set("Content-Type", "application/json"),
       ctx.json(user)
     );
-  }),
-  rest.get(`${root}photos`, (req, res, ctx) => {
-    return res(ctx.json(photos));
-  }),
-  rest.get(`${root}photos/:photoId`, async (req, res, ctx) => {
-    const { photoId } = req.params;
-    const mini = !!req.url.searchParams.get("mini");
-    const index = parseInt(photoId) - 1;
-    const image = await Jimp.read(images[index]);
-    if (mini) {
-      (await image).resize(100, Jimp.AUTO);
-    }
-    const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
-
-    return res(
-      ctx.set("Content-Length", imageBuffer.byteLength.toString()),
-      ctx.set("Content-Type", "image/jpeg"),
-      // Respond with the "ArrayBuffer".
-      ctx.body(imageBuffer)
-    );
-  }),
-  rest.get(`${root}static/:photoId`, async (req, res, ctx) => {
-    const { photoId } = req.params;
-    const index = parseInt(photoId) - 1;
-    const image = await Jimp.read(images[index]);
-    const imageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
-
-    return res(
-      ctx.set("Content-Length", imageBuffer.byteLength.toString()),
-      ctx.set("Content-Type", "image/jpeg"),
-      // Respond with the "ArrayBuffer".
-      ctx.body(imageBuffer)
-    );
-  }),
+  })
 ];
