@@ -20,6 +20,5 @@ test('loads photos', async () => {
         <PhotoPanel />
       </QueryClientProvider>
     )
-    console.log(screen.debug());
     await waitFor(() => screen.getByText(photos[0].caption))
   })

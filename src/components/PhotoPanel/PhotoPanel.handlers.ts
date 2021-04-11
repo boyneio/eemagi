@@ -45,7 +45,6 @@ const successHanlder = async (req: RestRequest, res: ResponseComposition, ctx: R
 
 export const handlers = [
     rest.get(`${root}photos`, (req, res, ctx) => {
-      console.log('here')
       return res(ctx.json(photos));
     }),
     rest.get(`${root}photos/:photoId`, async (req, res, ctx) => {

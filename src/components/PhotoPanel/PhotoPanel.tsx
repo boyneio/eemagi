@@ -6,6 +6,7 @@ import Loader from '../utils/loader';
 
 function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
     const [photos, setPhotos] = React.useState<Photo[]>([]);
+    
     const query = useQuery(
         'photos',
         () => API.get<Photo[]>("photos").then((res) => res.data)
@@ -23,6 +24,7 @@ function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
                 break;
         }
     }, [query.status, query.data]);
+    
     return {
         loading: query.isLoading,
         error: query.isError,
@@ -32,12 +34,15 @@ function usePhotos(): {loading: boolean, error: boolean, photos: Photo[]}{
 
 export default function ImagePanel(){
     const {loading, error, photos} = usePhotos();
+    
     if(loading){
         return <Loader />
     }
+    
     if(error){
         return <span>Whoops!</span>
     }
+    
     return (
         <ul>
             {
