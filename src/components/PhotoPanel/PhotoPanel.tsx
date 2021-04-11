@@ -31,7 +31,7 @@ function usePhotos(): { loading: boolean; error: boolean; photos: Photo[] } {
   };
 }
 
-export default function ImagePanel() {
+export default function PhotoPanel() {
   const { loading, error, photos } = usePhotos();
 
   if (loading) {
